@@ -1,8 +1,7 @@
 var Socket = (function() {
 	function Socket(url) {
 		this.ws = "ws://192.168.1.78:9000/cyodm/story",
-		this.socket = new WebSocket(this.ws + "?user=" + user.username),
-		this.params = [],
+		this.socket = new WebSocket(this.ws + "?user=" + user.username);
 		
 		this.socket.onopen = function(evt) {
 			 console.log({"open":evt});
@@ -15,6 +14,7 @@ var Socket = (function() {
 		this.socket.onmessage = function(evt) {
 			var response = jQuery.parseJSON(evt.data);
 			console.log(response);
+	
 			
 			// call relevant cyodm function
 			cyodm[response.type](response);
@@ -26,8 +26,8 @@ var Socket = (function() {
 		
 	};
 	
-	Socket.prototype.message = function(message) {
-		this.socket.send(message);
+	Socket.prototype.message = function(qweqwe) {
+		this.socket.send(JSON.stringify(qweqwe));
 	};
 	
 	return Socket;

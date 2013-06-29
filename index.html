@@ -7,25 +7,17 @@
 <body>
 	<div class="column">
 		<div class="connected"><span>0</span> Connected</div>
-		<div class="story"></div>
+		<div class="story" id="story-wrap"></div>
 	</div>
 	
 	<div class="column">
-		<h2>WebSocket Test</h2>  
-		<div id="output"></div> 
-		<input type="textfield" id="story" placeholder="Story" value="1074" />
-		<textarea id="message"> {
-		    "action": "save",
-		    "node": {
-		        "title": "Some Title",
-		        "text": "Some text"
-		    }
-		} </textarea>
-	<input type="submit" value="Send" onclick="send();"/> 
+		<input type="textfield" id="story" value="1" />
+		<input type="submit" id="story-update" />
 	</div>
 	
 	<div class="column">
 		<div class="chat"><span>Chat</span></div>
+		<div class="chat-input"><input type="text" id="chat-to" width="20"><input type="text" id="chat-message"><input type="submit" id="chat-send" value="send">
 	</div>
 	
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -39,47 +31,7 @@
 		var socket = new Socket();
 		
 		var cyodm = new CYODM();
-		cyodm.connect();
-	</script>
-	
-	
-	
-	
-	<script language="javascript" type="text/javascript">  
-var wsUri = "ws://localhost:9000/cyodm/story"; 
-
-function onOpen(evt) { 
-	writeToScreen("CONNECTED"); 
-} 
-
-function onClose(evt) { 
-	writeToScreen("DISCONNECTED"); 
-}  
-
-function onMessage(evt) { 
-	writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>'); 
-	//websocket.close(); 
-}  
-
-function onError(evt) { 
-	writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data); 
-}  
-
-function doSend(message) { 
-	writeToScreen("SENT: " + message);  
-	socket.message(message); 
-}  
-
-function writeToScreen(message) { 
-	var pre = document.createElement("p"); pre.style.wordWrap = "break-word"; pre.innerHTML = message; 
-	$("#output").append(pre);
-}  
-
-function send(){
-	mess = $("#message").val();
-	doSend(mess);
-}
-
-</script>  
+		cyodm.setStory	();
+	</script> 
 </body>
 </html>

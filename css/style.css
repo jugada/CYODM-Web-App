@@ -29,4 +29,21 @@
 	display:block;
 	margin:10px;
 	padding:10px;
+	position:relative;
+}
+.passage.active {
+	border-color:green;
+	border-width:3px;
+	outline: 0;
+}
+.passage .save {
+	background-color:green;
+	color:white;
+	padding:5px;
+	position:absolute;
+	bottom:0;
+	right:0;
+}
+.passage .save:hover {
+	cursor:pointer;
 }

@@ -2,17 +2,11 @@ var CYODM = (function() {
 	function CYODM() {
 		this.story,
 		this.params = {};
-		
-		var self = this;
-		document.addEventListener("input", function(e){
-		  self.updatePassage(e.srcElement.id, e.srcElement.innerHTML);
-		}, true);
 	};
 	
-	CYODM.prototype.connect = function() {
-		this.story = document.getElementById("story").value;
-		// socket.message({"action":"setStory", "id": this.story});
-		//this.updateStory(herpderp);
+	CYODM.prototype.setStory = function() {
+		this.story = parseInt(document.getElementById("story").value);
+		socket.message({"action":"setStory","id":this.story});
 	};
 	
 	CYODM.prototype.newParam = function(key, value) {
@@ -20,16 +14,31 @@ var CYODM = (function() {
 		console.log(this.params);
 	};
 	
-	CYODM.prototype.pushStory = function() {
-			socket.message(message); 
+	CYODM.prototype.sendChat = function(to, message) {
+		socket.message({"action":"talk","talk":message, "user":to}); 
+	};
+	
+	CYODM.prototype.createStory = function(title) {
+		socket.message({"action":"save","node":{
+			"type":"story",
+			"title": title
+		}});
+	};
+	
+	CYODM.prototype.createPassage = function(parent, text) {
+		socket.message({"action":"save","parent":parent, "node":{
+			"type":"passage",
+			"text":text
+		}});
 	};
 	
 	CYODM.prototype.dudes = function(data) {
-		$(".connected span").html(data.connected);
+		$(".connected span").html(data.count);
 	};
 	
 	CYODM.prototype.chat = function(data) {
 		$(".chat").append("<span>"+data.from+": "+data.message+"</span>");
+		$("#chat-to").val(data.from);
 	};
 	
 	// the story has been updated
@@ -48,3 +57,24 @@ var CYODM = (function() {
 	
 	return CYODM;
 })();
+
+//TODO: not this
+
+$('#chat-send').on('click', function() {
+	cyodm.sendChat($('#chat-to').val(), $('#chat-mesage').val());
+});
+
+$('#story-update').on('click', function() {
+	cyodm.setStory();
+});
+
+$( document).on( 'focus', '[contenteditable]:not(.active)', function() {
+	$(this).addClass("active");
+	$(this).append('<div class="save">save</div>');
+});
+
+$( document).on( 'click', '.save', function() {
+	cyodm.updatePassage($(this).parent('.passage').attr('id'), $(this).parent('.passage').html());
+	$(this).parent('.passage').removeClass("active");
+	$(this).remove();
+});
