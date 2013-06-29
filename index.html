@@ -1,0 +1,28 @@
+<!DOCTYPE html>  
+<meta charset="utf-8" />  
+<title>WebSocket Test</title>  
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="js/cyodm.js"></script>
+<script src="js/socket.js"></script>
+<script src="js/user.js"></script>
+<script language="javascript" type="text/javascript">
+	var username = prompt("Please enter your username:", "");
+	var user = new User(username);
+	
+	var cyodm = new Socket();
+	cyodm.connect();
+</script>
+
+<h2>WebSocket Test</h2>  
+<div id="output"></div> 
+<input type="textfield" id="user" />
+<textarea id="message"> {
+    "action": "save",
+    "node": {
+        "title": "Some Title",
+        "text": "Some text"
+    }
+} </textarea>
+<input type="submit" value="Send" onclick="send();"/> 
+<input type="submit" value="Connect" onclick="connect();"/> 
+</html>
