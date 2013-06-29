@@ -1,27 +1,85 @@
 <!DOCTYPE html>  
-<meta charset="utf-8" />  
-<title>WebSocket Test</title>  
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="js/cyodm.js"></script>
-<script src="js/socket.js"></script>
-<script src="js/user.js"></script>
-<script language="javascript" type="text/javascript">
-	var username = prompt("Please enter your username:", "");
-	var user = new User(username);
+<html>
+<head>
+	<title>WebSocket Test</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css"/>
+</head>
+<body>
+	<div class="column">
+		<div class="connected"><span>0</span> Connected</div>
+		<div class="story"></div>
+	</div>
 	
-	var cyodm = new CYODM();
-	cyodm.connect();
-</script>
-<h2>WebSocket Test</h2>  
-<div id="output"></div> 
-<input type="textfield" id="user" />
-<textarea id="message"> {
-    "action": "save",
-    "node": {
-        "title": "Some Title",
-        "text": "Some text"
-    }
-} </textarea>
-<input type="submit" value="Send" onclick="send();"/> 
-<input type="submit" value="Connect" onclick="connect();"/> 
+	<div class="column">
+		<h2>WebSocket Test</h2>  
+		<div id="output"></div> 
+		<input type="textfield" id="story" placeholder="Story" value="1074" />
+		<textarea id="message"> {
+		    "action": "save",
+		    "node": {
+		        "title": "Some Title",
+		        "text": "Some text"
+		    }
+		} </textarea>
+	<input type="submit" value="Send" onclick="send();"/> 
+	</div>
+	
+	<div class="column">
+		<div class="chat"><span>Chat</span></div>
+	</div>
+	
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="js/cyodm.js"></script>
+	<script src="js/socket.js"></script>
+	<script src="js/user.js"></script>
+	<script language="javascript" type="text/javascript">
+		var user = new User();
+		user.startSession();
+		
+		var socket = new Socket();
+		
+		var cyodm = new CYODM();
+		cyodm.connect();
+	</script>
+	
+	
+	
+	
+	<script language="javascript" type="text/javascript">  
+var wsUri = "ws://localhost:9000/cyodm/story"; 
+
+function onOpen(evt) { 
+	writeToScreen("CONNECTED"); 
+} 
+
+function onClose(evt) { 
+	writeToScreen("DISCONNECTED"); 
+}  
+
+function onMessage(evt) { 
+	writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>'); 
+	//websocket.close(); 
+}  
+
+function onError(evt) { 
+	writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data); 
+}  
+
+function doSend(message) { 
+	writeToScreen("SENT: " + message);  
+	socket.message(message); 
+}  
+
+function writeToScreen(message) { 
+	var pre = document.createElement("p"); pre.style.wordWrap = "break-word"; pre.innerHTML = message; 
+	$("#output").append(pre);
+}  
+
+function send(){
+	mess = $("#message").val();
+	doSend(mess);
+}
+
+</script>  
+</body>
 </html>

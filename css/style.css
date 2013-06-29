@@ -1,0 +1,32 @@
+* { margin:0; padding:0; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; 	}
+.column {
+	display:inline-block;
+	border-left:1px solid blue;
+	vertical-align:top;
+	width:33%;
+}
+
+.connected {
+	background-color:black;
+	color:white;
+	font:700 24px/24px Arial;
+}
+
+.chat {
+	
+}
+.chat span {
+	border-bottom:1px solid #CCC;
+	display:block;
+}
+
+.story {
+
+}
+.story .passage {
+	border:1px solid #CCC;
+	border-radius:6px;
+	display:block;
+	margin:10px;
+	padding:10px;
+}
