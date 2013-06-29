@@ -9,10 +9,9 @@
 	var username = prompt("Please enter your username:", "");
 	var user = new User(username);
 	
-	var cyodm = new Socket();
+	var cyodm = new CYODM();
 	cyodm.connect();
 </script>
-
 <h2>WebSocket Test</h2>  
 <div id="output"></div> 
 <input type="textfield" id="user" />
