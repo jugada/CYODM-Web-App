@@ -1,17 +1,11 @@
 var User = (function() {
-	function User(username) {
-		this.username = username;
+	function User() {
+		this.username;
 	};
 	
 	User.prototype.startSession = function() {
-		// TODO: check for session cookies, if not prompt
+		// TODO: check for session cookies
 		this.username = prompt("Please enter your username:", "");
-	};
-	
-	User.prototype.chat = function() {
-		var action = "talk";
-		var talk = "herpderp";
-		var message = "asdasd";
 	};
 	
 	return User;

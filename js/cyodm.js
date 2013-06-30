@@ -4,14 +4,13 @@ var CYODM = (function() {
 		this.params = {};
 	};
 	
+	CYODM.prototype.newParam = function(key, value) {
+		this.params[key] = encodeURIComponent(value);
+	};
+	
 	CYODM.prototype.setStory = function() {
 		this.story = parseInt(document.getElementById("story").value);
 		socket.message({"action":"setStory","id":this.story});
-	};
-	
-	CYODM.prototype.newParam = function(key, value) {
-		this.params[key] = encodeURIComponent(value);
-		console.log(this.params);
 	};
 	
 	CYODM.prototype.sendChat = function(to, message) {
@@ -41,7 +40,6 @@ var CYODM = (function() {
 		$("#chat-to").val(data.from);
 	};
 	
-	// the story has been updated
 	CYODM.prototype.pushStory = function(data) {
 		$(".story").append("<div class=\"passage\">"+data.message+"</span>");
 	};
@@ -52,7 +50,12 @@ var CYODM = (function() {
 	};
 	
 	CYODM.prototype.updateStory = function(id, text) {
-		$(".story").append('<div class="passage" id="'+id+'" contenteditable="true">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>');
+		var div = document.createElement("div");
+		div.contentEditable = true;
+		div.className = 'passage';
+		div.id = id;
+		div.innerHTML = text;
+		$(".story").append(div);
 	};
 	
 	return CYODM;
