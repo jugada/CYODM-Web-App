@@ -13,8 +13,12 @@ var Socket = (function() {
 		
 		this.socket.onmessage = function(evt) {
 			var response = jQuery.parseJSON(evt.data);
-			 console.log(response);
-			cyodm[response.type](response);
+			if (typeof cyodm[response.type] == 'undefined') {
+				console.log("CYODM.prototype."+response.type+" does not exist.");
+			} else {
+				console.log(response);
+				cyodm[response.type](response);
+			}
 		};
 		
 		this.socket.onerror = function(evt) { 
